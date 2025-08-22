@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Coding Berbasis Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-area">
+            <div class="game-header">
+                <div class="game-info">
+                    <span>Level: <span id="level">1</span></span>
+                    <span>Score: <span id="score">0</span></span>
+                </div>
+                <div class="language-selector">
+                    <span>Mode:</span>
+                    <button id="mode-code" class="active">Code to Text</button>
+                    <button id="mode-text">Text to Code</button>
+                    <div id="language-buttons" style="display: flex; gap: 8px; margin-left: 10px;">
+                        <button id="lang-python" class="active">Python</button>
+                        <button id="lang-javascript">JavaScript</button>
+                        <button id="lang-java">Java</button>
+                        <button id="lang-cpp">C++</button>
+                    </div>
+                </div>
+            </div>
+            <div class="game-board" id="gameBoard">
+                <div class="car" id="car"></div>
+                <div class="celebration" id="celebration"></div>
+            </div>
+        </div>
+        
+        <div class="code-panel">
+            <div class="code-header">
+                <div>💻 Panel Kode</div>
+                <div id="language-display">Python (Code to Text)</div>
+            </div>
+            
+            <div class="text-templates" id="textTemplates">
+                <div class="template-btn up" data-direction="up">⬆️ UP</div>
+                <div class="template-btn down" data-direction="down">⬇️ DOWN</div>
+                <div class="template-btn left" data-direction="left">⬅️ LEFT</div>
+                <div class="template-btn right" data-direction="right">➡️ RIGHT</div>
+            </div>
+            
+            <div class="code-section">
+                <div class="code-input-area">
+                    <textarea class="code-input" id="codeInput" placeholder="Masukkan kode di sini...
+Contoh:
+print('up', 2)
+print('right', 3)
+print('down', 1)"></textarea>
+                </div>
+                
+                <div class="side-buttons">
+                    <div class="control-buttons">
+                        <button class="btn btn-run" id="runBtn">🚀 Jalankan</button>
+                        <button class="btn btn-reset" id="resetBtn">🔄 Reset</button>
+                        <button class="btn btn-help" id="helpBtn">❓ Bantuan</button>
+                        <button class="btn btn-examples" id="examplesBtn">📖 Contoh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cara Bermain -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h2>🎮 Cara Bermain</h2>
+            <p><strong>Tujuan:</strong> Gerakkan mobil 🚗 menuju kotak finish 🏁 sambil menghindari rintangan 🧱</p>
+            <p><strong>Mode Code to Text:</strong></p>
+            <p><span class="syntax-highlight" id="help-syntax">print("up", jumlah_langkah)</span></p>
+            <p>• <strong>up</strong> - bergerak ke atas</p>
+            <p>• <strong>down</strong> - bergerak ke bawah</p>
+            <p>• <strong>left</strong> - bergerak ke kiri</p>
+            <p>• <strong>right</strong> - bergerak ke kanan</p>
+            <p><strong>Mode Text to Code:</strong></p>
+            <p>Klik template arah atau ketik langsung:</p>
+            <p><span class="syntax-highlight">up 2<br>right 3<br>down 1</span></p>
+            <p><strong>Tips:</strong> Gunakan beberapa baris kode untuk gerakan yang lebih kompleks!</p>
+            <button class="modal-btn" onclick="closeModal('helpModal')">Mulai Bermain!</button>
+        </div>
+    </div>
+
+    <!-- Modal Contoh -->
+    <div class="modal" id="examplesModal">
+        <div class="modal-content">
+            <h2>📖 Contoh Kode</h2>
+            <div id="examples-content">
+                <p><strong>Contoh 1 - Gerakan Sederhana:</strong></p>
+                <p><span class="syntax-highlight" id="example1">print("right", 3)<br>print("up", 2)</span></p>
+                <p><strong>Contoh 2 - Gerakan Zigzag:</strong></p>
+                <p><span class="syntax-highlight" id="example2">print("up", 1)<br>print("right", 2)<br>print("down", 1)<br>print("right", 2)</span></p>
+                <p><strong>Contoh 3 - Menghindari Rintangan:</strong></p>
+                <p><span class="syntax-highlight" id="example3">print("right", 1)<br>print("up", 3)<br>print("right", 2)<br>print("down", 1)</span></p>
+            </div>
+            <button class="modal-btn" onclick="closeModal('examplesModal')">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Menang -->
+    <div class="modal" id="winModal">
+        <div class="modal-content">
+            <h2 id="winTitle">🎉 Level 1 Success!</h2>
+            <p>Selamat! Anda berhasil menyelesaikan level ini!</p>
+            <p>Score: <span id="finalScore">0</span></p>
+            <button class="modal-btn" id="nextLevelBtn">Level Selanjutnya</button>
+        </div>
+    </div>
+
+    <!-- Modal Kalah -->
+    <div class="modal" id="loseModal">
+        <div class="modal-content">
+            <h2>💥 Oops! Mobil Menabrak!</h2>
+            <p>Mobil Anda menabrak rintangan. Coba lagi!</p>
+            <button class="modal-btn" onclick="restartLevel()">Mulai Ulang</button>
+        </div>
+    </div>
+
+    <!-- Modal Selamat Datang -->
+    <div class="modal" id="welcomeModal" style="display: flex;">
+        <div class="modal-content">
+            <h2>🎮 Selamat Datang di Game Belajar Coding!</h2>
+            <p><strong>Tujuan:</strong> Belajar coding sambil bermain!</p>
+            <p>Gerakkan mobil dengan menulis kode untuk mencapai finish dan menghindari rintangan.</p>
+            <p>Pilih bahasa pemrograman favorit Anda dan mulai petualangan coding!</p>
+            <button class="modal-btn" onclick="startGame()">Mulai Bermain!</button>
+            <br>
+            <small style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">&copy;copyright <span>2025</span> ValianEka</small>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
