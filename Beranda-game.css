@@ -1,0 +1,170 @@
+/* === Reset Default === */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #fff;
+  background-color: #0b1020;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Header & Footer === */
+.header {
+  width: 100%;
+  padding: 15px;
+  background-color: blue;
+  text-align: center;
+}
+
+.footer {
+  width: 100%;
+  padding: 15px;
+  background-color: purple;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* === Main agar world di tengah === */
+main {
+  flex: 1;                             /* isi ruang antara header dan footer */
+  display: flex;
+  align-items: center;                  /* vertikal tengah */
+  justify-content: center;              /* horizontal tengah */
+  padding-bottom: 70px;                 /* kasih ruang biar ga ketiban footer */
+}
+
+/* === Container Scroll World (Horizontal Grid) === */
+.world-content {
+  display: grid;
+  grid-auto-flow: column;              
+  grid-auto-columns: 280px;            
+  gap: 12px;                           
+  overflow-x: auto;
+  padding: 45px;
+  scroll-snap-type: x mandatory;
+}
+.world-content::-webkit-scrollbar { height: 6px; }
+
+/* === World Card (besar) === */
+.world {
+  grid-row: span 2;   
+  height: 460px;
+  border-radius: 18px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  cursor: pointer;
+  position: relative;
+  transition: transform .25s ease;
+}
+.world:hover { transform: scale(1.05); }
+
+/* === Two-World (isi 2 world kecil) === */
+.two-world {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 460px;
+}
+.two-world .world-small {
+  flex: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform .2s;
+  display: flex;
+  flex-direction: column;
+}
+.two-world .world-small:hover { transform: scale(1.05); }
+
+/* === Gambar di World === */
+.gambar-world {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* === Overlay Gradient === */
+.world::before,
+.world-small::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.1));
+}
+
+/* === Judul World === */
+.judul-world {
+  position: absolute;
+  top: 12px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: rgba(0,0,0,.6);
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffd95a;
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
+
+/* === Level Info === */
+.level-world {
+  position: absolute;
+  top: 20%; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* === Tombol Play === */
+.mainkan-world {
+  position: absolute;
+  bottom: 28%; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.mainkan-world img {
+  width: 50px;
+  /* height: 60px; */
+  border-radius: 20%;
+  background: radial-gradient(circle at top left, #ffe27a, #d4a017);
+  padding: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  transition: transform .2s;
+}
+.mainkan-world img:hover { transform: scale(1.15); }
+
+/* === Deskripsi World === */
+.keterangan-world {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #eee;
+  background: rgba(0,0,0,.5);
+  padding: 6px 12px;
+  border-radius: 12px;
+  max-width: 90%;
+}
